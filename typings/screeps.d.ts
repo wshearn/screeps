@@ -13,6 +13,7 @@ declare var FIND_HOSTILE_CREEPS: number;
 declare var FIND_SOURCES_ACTIVE: number;
 declare var FIND_SOURCES: number;
 declare var FIND_DROPPED_RESOURCES: number;
+declare var FIND_DROPPED_ENERGY: number;
 declare var FIND_STRUCTURES: number;
 declare var FIND_MY_STRUCTURES: number;
 declare var FIND_HOSTILE_STRUCTURES: number;
@@ -48,26 +49,29 @@ declare var ERR_NO_BODYPART: number;
 declare var ERR_NOT_ENOUGH_EXTENSIONS: number;
 declare var ERR_RCL_NOT_ENOUGH: number;
 declare var ERR_GCL_NOT_ENOUGH: number;
-declare var COLOR_RED: string;
-declare var COLOR_PURPLE: string;
-declare var COLOR_BLUE: string;
-declare var COLOR_CYAN: string;
-declare var COLOR_GREEN: string;
-declare var COLOR_YELLOW: string;
-declare var COLOR_ORANGE: string;
-declare var COLOR_BROWN: string;
-declare var COLOR_GREY: string;
-declare var COLOR_WHITE: string;
+declare var COLOR_RED: number;
+declare var COLOR_PURPLE: number;
+declare var COLOR_BLUE: number;
+declare var COLOR_CYAN: number;
+declare var COLOR_GREEN: number;
+declare var COLOR_YELLOW: number;
+declare var COLOR_ORANGE: number;
+declare var COLOR_BROWN: number;
+declare var COLOR_GREY: number;
+declare var COLOR_WHITE: number;
+declare var COLORS_ALL: number[];
 declare var CREEP_SPAWN_TIME: number;
 declare var CREEP_LIFE_TIME: number;
+declare var CREEP_CLAIM_LIFE_TIME: number;
+declare var CREEP_CORPSE_RATE: number;
 declare var OBSTACLE_OBJECT_TYPES: string[];
 declare var ENERGY_REGEN_TIME: number;
-declare var ENERGY_REGEN_AMOUNT: number;
 declare var ENERGY_DECAY: number;
 declare var CREEP_CORPSE_RATE: number;
 declare var REPAIR_COST: number;
 declare var RAMPART_DECAY_AMOUNT: number;
 declare var RAMPART_DECAY_TIME: number;
+declare var RAMPART_HITS: number;
 declare var RAMPART_HITS_MAX: {
     2: number;
     3: number;
@@ -81,11 +85,13 @@ declare var SPAWN_HITS: number;
 declare var SPAWN_ENERGY_START: number;
 declare var SPAWN_ENERGY_CAPACITY: number;
 declare var SOURCE_ENERGY_CAPACITY: number;
-declare var ROAD_HITS: number;
+declare var SOURCE_ENERGY_NEUTRAL_CAPACITY: number;
+declare var SOURCE_ENERGY_KEEPER_CAPACITY: number;
 declare var WALL_HITS: number;
 declare var WALL_HITS_MAX: number;
 declare var EXTENSION_HITS: number;
 declare var EXTENSION_ENERGY_CAPACITY: number;
+declare var ROAD_HITS: number;
 declare var ROAD_WEAROUT: number;
 declare var ROAD_DECAY_AMOUNT: number;
 declare var ROAD_DECAY_TIME: number;
@@ -107,15 +113,19 @@ declare var BODYPART_COST: {
     tough: number;
     claim: number;
 };
+declare var BODYPARTS_ALL: string[];
 declare var CARRY_CAPACITY: number;
 declare var HARVEST_POWER: number;
+declare var HARVEST_MINERAL_POWER: number;
 declare var REPAIR_POWER: number;
+declare var DISMANTLE_POWER: number;
 declare var BUILD_POWER: number;
 declare var ATTACK_POWER: number;
 declare var UPGRADE_CONTROLLER_POWER: number;
 declare var RANGED_ATTACK_POWER: number;
 declare var HEAL_POWER: number;
 declare var RANGED_HEAL_POWER: number;
+declare var DISMANTLE_COST: number;
 declare var MOVE: string;
 declare var WORK: string;
 declare var CARRY: string;
@@ -158,6 +168,7 @@ declare var STRUCTURE_EXTRACTOR: string;
 declare var STRUCTURE_LAB: string;
 declare var STRUCTURE_TERMINAL: string;
 declare var STRUCTURE_CONTAINER: string;
+declare var STRUCTURE_NUKER: string;
 declare var RESOURCE_ENERGY: string;
 declare var RESOURCE_POWER: string;
 declare var RESOURCE_UTRIUM: string;
@@ -202,6 +213,9 @@ declare var RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE: string;
 declare var RESOURCE_CATALYZED_GHODIUM_ACID: string;
 declare var RESOURCE_CATALYZED_GHODIUM_ALKALIDE: string;
 declare var RESOURCES_ALL: string[];
+declare var CONTROLLER_LEVELS: {
+    [level: number]: number;
+};
 declare var CONTROLLER_STRUCTURES: {
     spawn: {
         1: number;
@@ -334,13 +348,85 @@ declare var CONTROLLER_STRUCTURES: {
         8: number;
     };
 };
+declare var CONTROLLER_DOWNGRADE: {
+    [level: number]: number;
+};
+declare var CONTROLLER_CLAIM_DOWNGRADE: number;
+declare var CONTROLLER_RESERVE: number;
+declare var CONTROLLER_RESERVE_MAX: number;
+declare var CONTROLLER_MAX_UPGRADE_PER_TICK: number;
+declare var CONTROLLER_ATTACK_BLOCKED_UPGRADE: number;
+declare var TOWER_HITS: number;
+declare var TOWER_CAPACITY: number;
+declare var TOWER_ENERGY_COST: number;
+declare var TOWER_POWER_ATTACK: number;
+declare var TOWER_POWER_HEAL: number;
+declare var TOWER_POWER_REPAIR: number;
+declare var TOWER_OPTIMAL_RANGE: number;
+declare var TOWER_FALLOFF_RANGE: number;
+declare var TOWER_FALLOFF: number;
+declare var OBSERVER_HITS: number;
+declare var OBSERVER_RANGE: number;
+declare var POWER_BANK_HITS: number;
+declare var POWER_BANK_CAPACITY_MAX: number;
+declare var POWER_BANK_CAPACITY_MIN: number;
+declare var POWER_BANK_CAPACITY_CRIT: number;
+declare var POWER_BANK_DECAY: number;
+declare var POWER_BANK_HIT_BACK: number;
+declare var POWER_SPAWN_HITS: number;
+declare var POWER_SPAWN_ENERGY_CAPACITY: number;
+declare var POWER_SPAWN_POWER_CAPACITY: number;
+declare var POWER_SPAWN_ENERGY_RATIO: number;
+declare var EXTRACTOR_HITS: number;
+declare var LAB_HITS: number;
+declare var LAB_MINERAL_CAPACITY: number;
+declare var LAB_ENERGY_CAPACITY: number;
+declare var LAB_BOOST_ENERGY: number;
+declare var LAB_BOOST_MINERAL: number;
+declare var LAB_COOLDOWN: number;
 declare var GCL_POW: number;
 declare var GCL_MULTIPLY: number;
+declare var GCL_NOVICE: number;
 declare var MODE_SIMULATION: string;
+declare var MODE_SURVIVAL: string;
 declare var MODE_WORLD: string;
+declare var MODE_ARENA: string;
 declare var TERRAIN_MASK_WALL: number;
 declare var TERRAIN_MASK_SWAMP: number;
 declare var TERRAIN_MASK_LAVA: number;
+declare var MAX_CONSTRUCTION_SITES: number;
+declare var MAX_CREEP_SIZE: number;
+declare var MINERAL_REGEN_TIME: number;
+declare var MINERAL_MIN_AMOUNT: {
+    H: number;
+    O: number;
+    L: number;
+    K: number;
+    Z: number;
+    U: number;
+    X: number;
+};
+declare var MINERAL_RANDOM_FACTOR: number;
+declare var TERMINAL_CAPACITY: number;
+declare var TERMINAL_HITS: number;
+declare var TERMINAL_SEND_COST: number;
+declare var TERMINAL_MIN_SEND: number;
+declare var CONTAINER_HITS: number;
+declare var CONTAINER_CAPACITY: number;
+declare var CONTAINER_DECAY: number;
+declare var CONTAINER_DECAY_TIME: number;
+declare var CONTAINER_DECAY_TIME_OWNED: number;
+declare var NUKER_HITS: number;
+declare var NUKER_COOLDOWN: number;
+declare var NUKER_ENERGY_CAPACITY: number;
+declare var NUKER_GHODIUM_CAPACITY: number;
+declare var NUKE_LAND_TIME: number;
+declare var NUKE_RANGE: number;
+declare var NUKE_DAMAGE: {
+    0: number;
+    1: number;
+    4: number;
+};
 declare var REACTIONS: {
     H: {
         O: string;
@@ -552,9 +638,7 @@ declare class Creep extends RoomObject {
      * energy: number
      * The current amount of energy the creep is carrying.
      */
-    carry: {
-        energy: number;
-    };
+    carry: StoreDefinition;
     /**
      * The total amount of resources the creep can carry.
      */
@@ -604,6 +688,11 @@ declare class Creep extends RoomObject {
      * @returns Result Code: OK, ERR_NOT_OWNER, ERR_BUSY, ERR_INVALID_TARGET, ERR_NOT_IN_RANGE, ERR_NO_BODYPART
      */
     attack(target: Creep | Spawn | Structure): number;
+    /**
+     * Decreases the controller's downgrade or reservation timer for 1 tick per every 5 CLAIM body parts (so the creep must have at least 5xCLAIM). The controller under attack cannot be upgraded for the next 1,000 ticks. The target has to be at adjacent square to the creep.
+     * @returns Result Code: OK, ERR_NOT_OWNER, ERR_BUSY, ERR_INVALID_TARGET, ERR_NOT_IN_RANGE, ERR_NO_BODYPART
+     */
+    attackController(target: Structure): number;
     /**
      * Build a structure at the target construction site using carried energy. Needs WORK and CARRY body parts. The target has to be within 3 squares range of the creep.
      * @param target The target object to be attacked.
@@ -657,17 +746,14 @@ declare class Creep extends RoomObject {
      * Move the creep using the specified predefined path. Needs the MOVE body part.
      * @param path A path value as returned from Room.findPath or RoomPosition.findPathTo methods. Both array form and serialized string form are accepted.
      */
-    moveByPath(path: PathStep[] | {
-        path: RoomPosition[];
-        ops: number;
-    } | string): number;
+    moveByPath(path: PathStep[] | RoomPosition[] | string): number;
     /**
      * Find the optimal path to the target within the same room and move to it. A shorthand to consequent calls of pos.findPathTo() and move() methods. If the target is in another room, then the corresponding exit will be used as a target. Needs the MOVE body part.
      * @param x X position of the target in the room.
      * @param y Y position of the target in the room.
      * @param opts An object containing pathfinding options flags (see Room.findPath for more info) or one of the following: reusePath, serializeMemory, noPathFinding
      */
-    moveTo(x: number, y: number, opts?: MoveToOpts | PathFinderOps): number;
+    moveTo(x: number, y: number, opts?: MoveToOpts & FindPathOpts): number;
     /**
      * Find the optimal path to the target within the same room and move to it. A shorthand to consequent calls of pos.findPathTo() and move() methods. If the target is in another room, then the corresponding exit will be used as a target. Needs the MOVE body part.
      * @param target Can be a RoomPosition object or any object containing RoomPosition.
@@ -675,7 +761,7 @@ declare class Creep extends RoomObject {
      */
     moveTo(target: RoomPosition | {
         pos: RoomPosition;
-    }, opts?: MoveToOpts | PathFinderOps): number;
+    }, opts?: MoveToOpts & FindPathOpts): number;
     /**
      * Toggle auto notification when the creep is under attack. The notification will be sent to your account email. Turned on by default.
      * @param enabled Whether to enable notification or disable.
@@ -732,6 +818,13 @@ declare class Creep extends RoomObject {
      * @param target The target controller object to be upgraded.
      */
     upgradeController(target: Controller): number;
+    /**
+     * Withdraw resources from a structure. The target has to be at adjacent square to the creep. Multiple creeps can withdraw from the same structure in the same tick. Your creeps can withdraw resources from hostile structures as well, in case if there is no hostile rampart on top of it.
+     * @param target The target object.
+     * @param resourceType The target One of the RESOURCE_* constants..
+     * @param amount The amount of resources to be transferred. If omitted, all the available amount is used.
+     */
+    withdraw(target: Structure, resourceType: string, amount?: number): number;
 }
 /**
  * A flag. Flags can be used to mark particular spots in a room. Flags are visible to their owners only.
@@ -740,7 +833,7 @@ declare class Flag extends RoomObject {
     /**
      * Flag color. One of the following constants: COLOR_WHITE, COLOR_GREY, COLOR_RED, COLOR_PURPLE, COLOR_BLUE, COLOR_CYAN, COLOR_GREEN, COLOR_YELLOW, COLOR_ORANGE, COLOR_BROWN
      */
-    color: string;
+    color: number;
     /**
      * A shorthand to Memory.flags[flag.name]. You can use it for quick access the flag's specific memory data object.
      */
@@ -750,13 +843,9 @@ declare class Flag extends RoomObject {
      */
     name: string;
     /**
-     * The name of the room in which this flag is in. This property is deprecated and will be removed soon. Use pos.roomName instead.
-     */
-    roomName: string;
-    /**
      * Flag secondary color. One of the COLOR_* constants.
      */
-    secondaryColor: string;
+    secondaryColor: number;
     /**
      * Remove the flag.
      * @returns Result Code: OK
@@ -768,7 +857,7 @@ declare class Flag extends RoomObject {
      * @parma secondaryColor Secondary color of the flag. One of the COLOR_* constants.
      * @returns Result Code: OK, ERR_INVALID_ARGS
      */
-    setColor(color: string, secondaryColor?: string): number;
+    setColor(color: number, secondaryColor?: number): number;
     /**
      * Set new position of the flag.
      * @param x The X position in the room.
@@ -897,7 +986,8 @@ interface ReservationDefinition {
     ticksToEnd: number;
 }
 interface StoreDefinition {
-    energy: number;
+    [resource: string]: number;
+    energy?: number;
     power?: number;
 }
 interface LookAtResultWithPos {
@@ -907,6 +997,10 @@ interface LookAtResultWithPos {
     creep?: Creep;
     terrain?: string;
     structure?: Structure;
+    flag?: Flag;
+    energy?: Resource;
+    exit?: any;
+    source?: Source;
 }
 interface LookAtResult {
     type: string;
@@ -923,18 +1017,78 @@ interface LookAtResultMatrix {
     [coord: number]: LookAtResultMatrix | LookAtResult[];
 }
 interface FindPathOpts {
+    /**
+     * Treat squares with creeps as walkable. Can be useful with too many moving creeps around or in some other cases. The default
+     * value is false.
+     */
     ignoreCreeps?: boolean;
+    /**
+     * Treat squares with destructible structures (constructed walls, ramparts, spawns, extensions) as walkable. Use this flag when
+     * you need to move through a territory blocked by hostile structures. If a creep with an ATTACK body part steps on such a square,
+     * it automatically attacks the structure. The default value is false.
+     */
     ignoreDestructibleStructures?: boolean;
+    /**
+     * Ignore road structures. Enabling this option can speed up the search. The default value is false. This is only used when the
+     * new PathFinder is enabled.
+     */
     ignoreRoads?: boolean;
-    ignore?: [any | RoomPosition];
+    /**
+     * You can use this callback to modify a CostMatrix for any room during the search. The callback accepts two arguments, roomName
+     * and costMatrix. Use the costMatrix instance to make changes to the positions costs. If you return a new matrix from this callback,
+     * it will be used instead of the built-in cached one. This option is only used when the new PathFinder is enabled.
+     *
+     * @param roomName The name of the room.
+     * @param costMatrix The current CostMatrix
+     * @returns The new CostMatrix to use
+     */
+    costCallBack?(roomName: string, costMatrix: CostMatrix): CostMatrix;
+    /**
+     * An array of the room's objects or RoomPosition objects which should be treated as walkable tiles during the search. This option
+     * cannot be used when the new PathFinder is enabled (use costCallback option instead).
+     */
+    ignore?: any[] | RoomPosition[];
+    /**
+     * An array of the room's objects or RoomPosition objects which should be treated as obstacles during the search. This option cannot
+     * be used when the new PathFinder is enabled (use costCallback option instead).
+     */
     avoid?: any[] | RoomPosition[];
+    /**
+     * The maximum limit of possible pathfinding operations. You can limit CPU time used for the search based on ratio 1 op ~ 0.001 CPU.
+     * The default value is 2000.
+     */
     maxOps?: number;
+    /**
+     * Weight to apply to the heuristic in the A* formula F = G + weight * H. Use this option only if you understand the underlying
+     * A* algorithm mechanics! The default value is 1.2.
+     */
     heuristicWeight?: number;
+    /**
+     * If true, the result path will be serialized using Room.serializePath. The default is false.
+     */
     serialize?: boolean;
+    /**
+     * The maximum allowed rooms to search. The default (and maximum) is 16. This is only used when the new PathFinder is enabled.
+     */
     maxRooms?: number;
 }
 interface MoveToOpts {
+    /**
+     * This option enables reusing the path found along multiple game ticks. It allows to save CPU time, but can result in a slightly
+     * slower creep reaction behavior. The path is stored into the creep's memory to the _move property. The reusePath value defines
+     * the amount of ticks which the path should be reused for. The default value is 5. Increase the amount to save more CPU, decrease
+     * to make the movement more consistent. Set to 0 if you want to disable path reusing.
+     */
     reusePath?: number;
+    /**
+     * If reusePath is enabled and this option is set to true, the path will be stored in memory in the short serialized form using
+     * Room.serializePath. The default value is true.
+     */
+    serializeMemory: boolean;
+    /**
+     * If this option is set to true, moveTo method will return ERR_NOT_FOUND if there is no memorized path to reuse. This can
+     * significantly save CPU time in some cases. The default value is false.
+     */
     noPathFinding?: boolean;
 }
 interface PathStep {
@@ -992,10 +1146,14 @@ declare class GameMap {
      * @param toRoom Finish room name or room object.
      * @returns the route array or ERR_NO_PATH code
      */
-    findRoute(fromRoom: string | Room, toRoom: string | Room): [{
+    findRoute(fromRoom: string | Room, toRoom: string | Room, opts?: {
+        routeCallback: {
+            (roomName: string, fromRoomName: string): any;
+        };
+    }): {
         exit: string;
         room: string;
-    }] | number;
+    }[] | number;
     /**
      * Get the linear distance (in rooms) between two rooms. You can use this function to estimate the energy cost of
      * sending resources through terminals, or using observers and nukes.
@@ -1019,6 +1177,11 @@ declare class GameMap {
      * @param pos The position object.
      */
     getTerrainAt(pos: RoomPosition): string;
+    /**
+     * Check if the room with the given name is protected by temporary "newbie" walls.
+     * @param roomName The room name.
+     * @returns A boolean value.
+     */
     isRoomProtected(roomName: string): boolean;
 }
 /**
@@ -1051,6 +1214,7 @@ interface Transaction {
     description: string;
 }
 interface Memory {
+    [name: string]: any;
     creeps: {
         [name: string]: any;
     };
@@ -1102,13 +1266,27 @@ interface PathFinder {
      * Find an optimal path between origin and goal.
      *
      * @param origin The start position.
-     * @param goal A goal or an array of goals. If more than one goal is supplied then the cheapest path found out of all the goals will be returned.
+     * @param goal goal A RoomPosition or an object containing a RoomPosition and range
      * @param opts An object containing additional pathfinding flags.
      */
     search(origin: RoomPosition, goal: RoomPosition | {
         pos: RoomPosition;
         range: number;
-    }, opts?: PathFinderOps): {
+    }, opts?: PathFinderOpts): {
+        path: RoomPosition[];
+        ops: number;
+    };
+    /**
+     * Find an optimal path between origin and goal.
+     *
+     * @param origin The start position.
+     * @param goal an array of goals, the cheapest path found out of all the goals will be returned.
+     * @param opts An object containing additional pathfinding flags.
+     */
+    search(origin: RoomPosition, goal: RoomPosition[] | {
+        pos: RoomPosition;
+        range: number;
+    }[], opts?: PathFinderOpts): {
         path: RoomPosition[];
         ops: number;
     };
@@ -1124,7 +1302,7 @@ interface PathFinder {
 /**
  * An object containing additional pathfinding flags.
  */
-interface PathFinderOps {
+interface PathFinderOpts {
     /**
      * Cost for walking on plain positions. The default is 1.
      */
@@ -1159,7 +1337,7 @@ interface PathFinderOps {
      *
      * @param roomName
      */
-    roomCallback?(roomName: string): CostMatrix;
+    roomCallback?(roomName: string): boolean | CostMatrix;
 }
 /**
  * Container for custom navigation cost data.
@@ -1215,8 +1393,17 @@ interface RawMemory {
  * A dropped piece of resource. It will decay after a while if not picked up. Dropped resource pile decays for ceil(amount/1000) units per tick.
  */
 declare class Resource extends RoomObject {
+    /**
+     * The amount of resource units containing.
+     */
     amount: number;
+    /**
+     * A unique object identificator. You can use `Game.getObjectById` method to retrieve an object instance by its `id`.
+     */
     id: string;
+    /**
+     * One of the `RESOURCE_*` constants.
+     */
     resourceType: string;
 }
 /**
@@ -1225,7 +1412,15 @@ declare class Resource extends RoomObject {
  */
 declare class RoomObject {
     prototype: RoomObject;
+    /**
+     * An object representing the position of this object in the room.
+     */
     pos: RoomPosition;
+    /**
+     * The link to the Room object. May be undefined in case if an object is a
+     * flag or a construction site and is placed in a room that is not visible
+     * to you.
+     */
     room: Room;
 }
 /**
@@ -1262,13 +1457,13 @@ declare class RoomPosition {
      * @param color The color of a new flag. Should be one of the COLOR_* constants
      * @param secondaryColor The secondary color of a new flag. Should be one of the COLOR_* constants. The default value is equal to color.
      */
-    createFlag(name?: string, color?: string, secondaryColor?: string): number;
+    createFlag(name?: string, color?: number, secondaryColor?: number): number;
     /**
      * Find an object with the shortest path from the given position. Uses A* search algorithm and Dijkstra's algorithm.
      * @param type See Room.find
      * @param opts An object containing pathfinding options (see Room.findPath), or one of the following: filter, algorithm
      */
-    findClosestByPath<T>(type: number, opts?: {
+    findClosestByPath<T>(type: number, opts?: FindPathOpts & {
         filter?: any | string;
         algorithm?: string;
     }): T;
@@ -1277,7 +1472,7 @@ declare class RoomPosition {
      * @param objects An array of room's objects or RoomPosition objects that the search should be executed against.
      * @param opts An object containing pathfinding options (see Room.findPath), or one of the following: filter, algorithm
      */
-    findClosestByPath<T>(objects: [T | RoomPosition], opts?: {
+    findClosestByPath<T>(objects: T[] | RoomPosition[], opts?: FindPathOpts & {
         filter?: any | string;
         algorithm?: string;
     }): T;
@@ -1294,7 +1489,7 @@ declare class RoomPosition {
      * @param objects An array of room's objects or RoomPosition objects that the search should be executed against.
      * @param opts An object containing one of the following options: filter
      */
-    findClosestByRange<T>(objects: [T | RoomPosition], opts?: {
+    findClosestByRange<T>(objects: T[] | RoomPosition[], opts?: {
         filter: any | string;
     }): T;
     /**
@@ -1305,7 +1500,6 @@ declare class RoomPosition {
      */
     findInRange<T>(type: number, range: number, opts?: {
         filter?: any | string;
-        algorithm?: string;
     }): T[];
     /**
      * Find all objects in the specified linear range.
@@ -1313,9 +1507,8 @@ declare class RoomPosition {
      * @param range The range distance.
      * @param opts See Room.find.
      */
-    findInRange<T>(objects: [T | RoomPosition], range: number, opts?: {
+    findInRange<T>(objects: T[] | RoomPosition[], range: number, opts?: {
         filter?: any | string;
-        algorithm?: string;
     }): T[];
     /**
      * Find an optimal path to the specified position using A* search algorithm. This method is a shorthand for Room.findPath. If the target is in another room, then the corresponding exit will be used as a target.
@@ -1466,7 +1659,7 @@ declare class Room {
      * @param color The color of a new flag. Should be one of the COLOR_* constants. The default value is COLOR_WHITE.
      * @param secondaryColor The secondary color of a new flag. Should be one of the COLOR_* constants. The default value is equal to color.
      */
-    createFlag(x: number, y: number, name: string, color: string, secondaryColor?: string): number;
+    createFlag(x: number, y: number, name: string, color: number, secondaryColor?: number): number;
     /**
      * Create new Flag at the specified location.
      * @param pos Can be a RoomPosition object or any object containing RoomPosition.
@@ -1476,10 +1669,10 @@ declare class Room {
      */
     createFlag(pos: RoomPosition | {
         pos: RoomPosition;
-    }, name: string, color: string, secondaryColor?: string): number;
+    }, name: string, color: number, secondaryColor?: number): number;
     /**
      * Find all objects of the specified type in the room.
-     * @param type One of the following constants:FIND_CREEPS, FIND_MY_CREEPS, FIND_HOSTILE_CREEPS, FIND_MY_SPAWNS, FIND_HOSTILE_SPAWNS, FIND_SOURCES, FIND_SOURCES_ACTIVE, FIND_DROPPED_ENERGY, FIND_STRUCTURES, FIND_MY_STRUCTURES, FIND_HOSTILE_STRUCTURES, FIND_FLAGS, FIND_CONSTRUCTION_SITES, FIND_EXIT_TOP, FIND_EXIT_RIGHT, FIND_EXIT_BOTTOM, FIND_EXIT_LEFT, FIND_EXIT
+     * @param type One of the following constants:FIND_CREEPS, FIND_MY_CREEPS, FIND_HOSTILE_CREEPS, FIND_MY_SPAWNS, FIND_HOSTILE_SPAWNS, FIND_SOURCES, FIND_SOURCES_ACTIVE, FIND_DROPPED_RESOURCES, FIND_DROPPED_ENERGY, FIND_STRUCTURES, FIND_MY_STRUCTURES, FIND_HOSTILE_STRUCTURES, FIND_FLAGS, FIND_CONSTRUCTION_SITES, FIND_EXIT_TOP, FIND_EXIT_RIGHT, FIND_EXIT_BOTTOM, FIND_EXIT_LEFT, FIND_EXIT
      * @param opts An object with additional options
      * @returns An array with the objects found.
      */
@@ -1492,7 +1685,7 @@ declare class Room {
      * @returns The room direction constant, one of the following: FIND_EXIT_TOP, FIND_EXIT_RIGHT, FIND_EXIT_BOTTOM, FIND_EXIT_LEFT
      * Or one of the following error codes: ERR_NO_PATH, ERR_INVALID_ARGS
      */
-    findExitTo(room: string | Room): string | number;
+    findExitTo(room: string | Room): number;
     /**
      * Find an optimal path inside the room between fromPos and toPos using A* search algorithm.
      * @param fromPos The start position.
@@ -1564,7 +1757,7 @@ declare class Room {
      * @param path A path array retrieved from Room.findPath.
      * @returns A serialized string form of the given path.
      */
-    serializePath(path: PathStep[]): string;
+    static serializePath(path: PathStep[]): string;
     /**
      * Deserialize a short string path representation into an array form.
      * @param path A serialized path string.
@@ -1707,6 +1900,11 @@ declare class Spawn extends OwnedStructure {
      */
     renewCreep(target: Creep): number;
     /**
+     * Kill the creep and drop up to 100% of resources spent on its spawning and boosting depending on remaining life time. The target should be at adjacent square.
+     * @param target The target creep object.
+     */
+    recycleCreep(target: Creep): number;
+    /**
      * Transfer the energy from the spawn to a creep.
      * @param target The creep object which energy should be transferred to.
      * @param amount The amount of energy to be transferred. If omitted, all the remaining amount of energy will be used.
@@ -1747,6 +1945,10 @@ declare class Structure extends RoomObject {
      */
     notifyWhenAttacked(enabled: boolean): number;
 }
+/**
+ * The base prototype for a structure that has an owner. Such structures can be
+ * found using `FIND_MY_STRUCTURES` and `FIND_HOSTILE_STRUCTURES` constants.
+ */
 declare class OwnedStructure extends Structure {
     /**
      * Whether this is your own structure. Walls and roads don't have this property as they are considered neutral structures.
@@ -1758,7 +1960,9 @@ declare class OwnedStructure extends Structure {
     owner: Owner;
 }
 /**
- *
+ * Claim this structure to take control over the room. The controller structure
+ * cannot be damaged or destroyed. It can be addressed by `Room.controller`
+ * property.
  */
 declare class StructureController extends OwnedStructure {
     /**
@@ -1787,7 +1991,9 @@ declare class StructureController extends OwnedStructure {
     unclaim(): number;
 }
 /**
- *
+ * Contains energy which can be spent on spawning bigger creeps. Extensions can
+ * be placed anywhere in the room, any spawns will be able to use them regardless
+ * of distance.
  */
 declare class StructureExtension extends OwnedStructure {
     /**
@@ -1806,7 +2012,7 @@ declare class StructureExtension extends OwnedStructure {
     transferEnergy(target: Creep, amount?: number): number;
 }
 /**
- *
+ * Remotely transfers energy to another Link in the same room.
  */
 interface StructureLink extends OwnedStructure {
     /**
@@ -1829,7 +2035,8 @@ interface StructureLink extends OwnedStructure {
     transferEnergy(target: Creep | StructureLink, amount?: number): number;
 }
 /**
- *
+ * Non-player structure. Spawns NPC Source Keepers that guards energy sources
+ * and minerals in some rooms. This structure cannot be destroyed.
  */
 declare class StructureKeeperLair extends OwnedStructure {
     /**
@@ -1838,14 +2045,14 @@ declare class StructureKeeperLair extends OwnedStructure {
     ticksToSpawn: number;
 }
 /**
- *
+ * Provides visibility into a distant room from your script.
  */
 declare class StructureObserver extends OwnedStructure {
     /**
      * Provide visibility into a distant room from your script. The target room object will be available on the next tick. The maximum range is 5 rooms.
      * @param roomName
      */
-    observerRoom(roomName: string): number;
+    observeRoom(roomName: string): number;
 }
 /**
  *
@@ -1861,7 +2068,8 @@ declare class StructurePowerBank extends OwnedStructure {
     ticksToDecay: number;
 }
 /**
- *
+ * Non-player structure. Contains power resource which can be obtained by
+ * destroying the structure. Hits the attacker creep back on each attack.
  */
 declare class StructurePowerSpawn extends OwnedStructure {
     /**
@@ -1897,7 +2105,8 @@ declare class StructurePowerSpawn extends OwnedStructure {
     transferEnergy(target: Creep, amount?: number): number;
 }
 /**
- *
+ * Blocks movement of hostile creeps, and defends your creeps and structures on
+ * the same tile. Can be used as a controllable gate.
  */
 declare class StructureRampart extends OwnedStructure {
     /**
@@ -1909,13 +2118,14 @@ declare class StructureRampart extends OwnedStructure {
      */
     isPublic: boolean;
     /**
-     *  Make this rampart public to allow other players' creeps to pass through.
+     * Make this rampart public to allow other players' creeps to pass through.
      * @param isPublic Whether this rampart should be public or non-public
      */
     setPublic(isPublic: boolean): any;
 }
 /**
- *
+ * Decreases movement cost to 1. Using roads allows creating creeps with less
+ * `MOVE` body parts.
  */
 declare class StructureRoad extends Structure {
     /**
@@ -1924,7 +2134,8 @@ declare class StructureRoad extends Structure {
     ticksToDecay: number;
 }
 /**
- *
+ * A structure that can store huge amount of resource units. Only one structure
+ * per room is allowed that can be addressed by `Room.storage` property.
  */
 declare class StructureStorage extends OwnedStructure {
     /**
@@ -1951,7 +2162,9 @@ declare class StructureStorage extends OwnedStructure {
     transferEnergy(target: Creep, amount?: number): number;
 }
 /**
- *
+ * Remotely attacks or heals creeps, or repairs structures. Can be targeted to
+ * any object in the room. However, its effectiveness highly depends on the
+ * distance. Each action consumes energy.
  */
 declare class StructureTower extends OwnedStructure {
     /**
@@ -1985,7 +2198,7 @@ declare class StructureTower extends OwnedStructure {
     transferEnergy(target: Creep, amount?: number): number;
 }
 /**
- *
+ * Blocks movement of all creeps.
  */
 declare class StructureWall extends Structure {
     /**
@@ -2043,7 +2256,7 @@ declare class StructureLab extends OwnedStructure {
     transfer(target: Creep, resourceType: string, amount?: number): number;
 }
 /**
- * 	Sends any resources to a Terminal in another room.
+ * Sends any resources to a Terminal in another room.
  */
 declare class StructureTerminal extends OwnedStructure {
     /**
@@ -2071,7 +2284,7 @@ declare class StructureTerminal extends OwnedStructure {
     transfer(target: Creep, resourceType: String, amount?: number): number;
 }
 /**
- * 	Contains up to 2,000 resource units. Can be constructed in neutral rooms. Decays for 5,000 hits per 100 ticks.
+ * Contains up to 2,000 resource units. Can be constructed in neutral rooms. Decays for 5,000 hits per 100 ticks.
  */
 declare class StructureContainer extends Structure {
     /**
@@ -2090,4 +2303,38 @@ declare class StructureContainer extends Structure {
      * @param amount The amount of resources to be transferred. If omitted, all the available amount is used.
      */
     transfer(target: Creep, resourceType: string, amount?: number): number;
+}
+/**
+ * Launches a nuke to another room dealing huge damage to the landing area.
+ * Each launch has a cooldown and requires energy and ghodium resources. Launching
+ * creates a Nuke object at the target room position which is visible to any player
+ * until it is landed. Incoming nuke cannot be moved or cancelled. Nukes cannot
+ * be launched from or to novice rooms.
+ */
+declare class StructureNuker extends OwnedStructure {
+    /**
+     * The amount of energy contained in this structure.
+     */
+    energy: number;
+    /**
+     * The total amount of energy this structure can contain.
+     */
+    energyCapacity: number;
+    /**
+     * The amount of energy contained in this structure.
+     */
+    ghodium: number;
+    /**
+     * The total amount of energy this structure can contain.
+     */
+    ghodiumCapacity: number;
+    /**
+     * The amount of game ticks the link has to wait until the next transfer is possible.
+     */
+    cooldown: number;
+    /**
+     * Launch a nuke to the specified position.
+     * @param pos The target room position.
+     */
+    launchNuke(pos: RoomPosition): number;
 }

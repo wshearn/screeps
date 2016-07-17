@@ -27,8 +27,21 @@ class Roles {
     }
 
     static shouldSuicide(creep) {
+        // If hostile creep in range and fatigue is low
+        // no defense near and no attack parts
+        // OR ttl is <100and I have the resources to spawn a replacement
+        // then suicide
+        if (creep.ticksToLive < 100 && _.sum(creep.carry) == 0) {
+            return true;
+        }
         if (creep.fatigue > 0) {
             return false;
+        }
+    }
+    
+    static withdraw(creep, target, energyType) {
+        if (creep.withdraw(target, energyType) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(target);
         }
     }
 }
